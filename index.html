@@ -1,63 +1,443 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morph Forge Exotics — Precision Genetics. Purpose-Driven Breeding.</title>
-    <meta name="description" content="Morph Forge Exotics is a genetics-focused exotic reptile breeding program in New Britain, Connecticut, producing collector-quality ball python and western hognose morphs.">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Morph Forge Exotics — Precision Genetics. Purpose-Driven Breeding.</title>
+<meta name="description" content="Morph Forge Exotics is a genetics-focused exotic reptile breeding program in New Britain, Connecticut, producing collector-quality ball python and western hognose morphs." />
+<link rel="icon" href="logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-2: #111110;
+    --panel: #15140f;
+    --gold: #c9a55c;
+    --gold-bright: #e2c585;
+    --gold-dim: #8a743f;
+    --text: #e8e4da;
+    --muted: #9c968a;
+    --line: rgba(201,165,92,0.18);
+    --max: 1140px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.7;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  h1,h2,h3,.brandmark { font-family: 'Cinzel', serif; letter-spacing: 0.04em; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+  .gold { color: var(--gold); }
+  .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem; letter-spacing: 0.32em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 18px;
+  }
+
+  /* NAV */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(10,10,10,0.72);
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+  }
+  header.scrolled { border-bottom: 1px solid var(--line); background: rgba(10,10,10,0.9); }
+  nav { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  .nav-brand { display: flex; align-items: center; gap: 12px; }
+  .nav-brand img { height: 40px; width: 40px; border-radius: 50%; }
+  .nav-brand span { font-family: 'Cinzel', serif; font-size: 0.95rem; letter-spacing: 0.12em; color: var(--gold-bright); }
+  .nav-links { display: flex; gap: 34px; align-items: center; }
+  .nav-links a { font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); transition: color .2s; }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    border: 1px solid var(--gold-dim); color: var(--gold) !important;
+    padding: 9px 20px; border-radius: 2px; transition: all .25s;
+  }
+  .nav-cta:hover { background: var(--gold); color: #0a0a0a !important; }
+  .menu-btn { display: none; background: none; border: none; color: var(--gold); font-size: 1.5rem; cursor: pointer; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; position: relative;
+    padding: 120px 0 80px;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(201,165,92,0.10), transparent 55%),
+      radial-gradient(circle at 20% 80%, rgba(201,165,92,0.05), transparent 50%),
+      var(--bg);
+  }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(201,165,92,0.05) 1px, transparent 1px);
+    background-size: 26px 26px; mask-image: linear-gradient(to bottom, transparent, black, transparent);
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 60px; align-items: center; position: relative; z-index: 2; }
+  .hero h1 { font-size: clamp(2.4rem, 5vw, 4rem); line-height: 1.08; font-weight: 600; color: var(--text); }
+  .hero h1 .gold { display: block; }
+  .hero p.lead { color: var(--muted); font-size: 1.12rem; max-width: 520px; margin: 26px 0 36px; }
+  .hero-badge {
+    display: flex; justify-content: center; align-items: center; position: relative;
+  }
+  .hero-badge img { width: 100%; max-width: 360px; filter: drop-shadow(0 0 50px rgba(201,165,92,0.25)); animation: float 6s ease-in-out infinite; }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+  .hero-badge::before {
+    content: ""; position: absolute; width: 360px; height: 360px; border-radius: 50%;
+    border: 1px solid var(--line); animation: spin 40s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .btn-row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'Cinzel', serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 15px 30px; border-radius: 2px; transition: all .25s; cursor: pointer; display: inline-block;
+  }
+  .btn-primary { background: var(--gold); color: #0a0a0a; border: 1px solid var(--gold); }
+  .btn-primary:hover { background: var(--gold-bright); box-shadow: 0 0 30px rgba(201,165,92,0.3); }
+  .btn-ghost { border: 1px solid var(--gold-dim); color: var(--gold); }
+  .btn-ghost:hover { border-color: var(--gold); background: rgba(201,165,92,0.08); }
+
+  .stat-row { display: flex; gap: 40px; margin-top: 50px; flex-wrap: wrap; }
+  .stat .num { font-family: 'Cinzel', serif; font-size: 1.9rem; color: var(--gold-bright); }
+  .stat .lbl { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+  /* SECTIONS */
+  section { padding: 100px 0; position: relative; }
+  .section-head { max-width: 680px; margin-bottom: 60px; }
+  .section-head.center { margin: 0 auto 60px; text-align: center; }
+  .section-head h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 600; line-height: 1.15; }
+  .section-head p { color: var(--muted); margin-top: 18px; font-size: 1.05rem; }
+  .alt { background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+
+  /* PILLARS */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .pillar {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 4px; padding: 36px 30px;
+    transition: transform .3s, border-color .3s;
+  }
+  .pillar:hover { transform: translateY(-6px); border-color: var(--gold-dim); }
+  .pillar .ic { font-size: 1.6rem; margin-bottom: 18px; }
+  .pillar h3 { font-size: 1.05rem; color: var(--gold-bright); letter-spacing: 0.06em; margin-bottom: 12px; }
+  .pillar p { color: var(--muted); font-size: 0.95rem; }
+
+  /* SPECIES */
+  .species { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .species-card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 4px; overflow: hidden;
+    position: relative; padding: 40px 36px; transition: border-color .3s;
+  }
+  .species-card:hover { border-color: var(--gold-dim); }
+  .species-card .tag { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .species-card h3 { font-size: 1.5rem; margin: 10px 0 6px; }
+  .species-card .latin { font-style: italic; color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+  .species-card p { color: var(--muted); font-size: 0.96rem; }
+  .traits { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .traits span {
+    font-size: 0.72rem; letter-spacing: 0.06em; color: var(--gold);
+    border: 1px solid var(--line); padding: 5px 12px; border-radius: 20px;
+  }
+
+  /* COLLECTION TABLE */
+  .table-wrap { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 16px 22px; font-size: 0.92rem; }
+  thead th {
+    font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); background: var(--bg-2); border-bottom: 1px solid var(--line);
+  }
+  tbody tr { border-bottom: 1px solid rgba(201,165,92,0.08); transition: background .2s; }
+  tbody tr:hover { background: rgba(201,165,92,0.04); }
+  tbody tr:last-child { border-bottom: none; }
+  td.name { color: var(--gold-bright); font-weight: 500; font-family: 'Cinzel', serif; letter-spacing: 0.04em; }
+  .pill { font-size: 0.7rem; padding: 3px 11px; border-radius: 20px; letter-spacing: 0.05em; white-space: nowrap; }
+  .pill.ready { background: rgba(110,170,90,0.14); color: #9fcf88; border: 1px solid rgba(110,170,90,0.25); }
+  .pill.soon { background: rgba(201,165,92,0.12); color: var(--gold); border: 1px solid var(--line); }
+  .collection-note { margin-top: 18px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+
+  /* TIMELINE */
+  .timeline { max-width: 760px; margin: 0 auto; position: relative; }
+  .timeline::before { content: ""; position: absolute; left: 12px; top: 6px; bottom: 6px; width: 1px; background: var(--line); }
+  .tl-item { position: relative; padding: 0 0 38px 50px; }
+  .tl-item::before {
+    content: ""; position: absolute; left: 6px; top: 4px; width: 13px; height: 13px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--gold); box-shadow: 0 0 14px rgba(201,165,92,0.4);
+  }
+  .tl-item .date { font-family: 'Cinzel', serif; color: var(--gold); font-size: 0.82rem; letter-spacing: 0.1em; }
+  .tl-item .ev { color: var(--text); margin-top: 4px; }
+  .tl-item:last-child { padding-bottom: 0; }
+
+  /* ETHICS */
+  .ethics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 40px; max-width: 880px; margin: 0 auto; }
+  .ethic { display: flex; gap: 14px; align-items: flex-start; }
+  .ethic .chk { color: var(--gold); font-weight: 600; margin-top: 2px; flex-shrink: 0; }
+  .ethic p { color: var(--muted); font-size: 0.96rem; }
+
+  /* CTA */
+  .cta { text-align: center; }
+  .cta-box {
+    border: 1px solid var(--line); border-radius: 6px; padding: 70px 40px;
+    background: radial-gradient(circle at 50% 0%, rgba(201,165,92,0.08), transparent 70%), var(--panel);
+  }
+  .cta-box h2 { font-size: clamp(1.8rem,3.5vw,2.6rem); font-weight: 600; }
+  .cta-box p { color: var(--muted); max-width: 480px; margin: 18px auto 34px; }
+  .socials { display: flex; gap: 18px; justify-content: center; margin-top: 34px; flex-wrap: wrap; }
+  .socials a { font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); border: 1px solid var(--line); padding: 10px 18px; border-radius: 2px; transition: all .25s; }
+  .socials a:hover { color: var(--gold); border-color: var(--gold-dim); }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--line); padding: 50px 0 40px; }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .foot .brandmark { color: var(--gold-bright); font-size: 1rem; letter-spacing: 0.12em; }
+  .foot .tag { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.08em; }
+  .foot .meta { color: var(--muted); font-size: 0.78rem; text-align: right; }
+
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+    .hero-badge { order: -1; }
+    .hero-badge::before { width: 280px; height: 280px; }
+    .pillars, .species, .ethics-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .menu-btn { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column; position: absolute; top: 72px; left: 0; right: 0;
+      background: rgba(10,10,10,0.97); border-bottom: 1px solid var(--line); padding: 24px 28px; gap: 20px;
+    }
+    .foot { flex-direction: column; text-align: center; }
+    .foot .meta { text-align: center; }
+    td, th { padding: 13px 14px; font-size: 0.84rem; }
+  }
+</style>
 </head>
 <body>
-    <header>
-        <h1>Designer Reptile Genetics, Forged With Intent.</h1>
-        <p>Morph Forge Exotics is a small-scale, genetics-focused breeding program producing collector-quality ball python and western hognose morphs — bred deliberately, documented transparently, and raised with care.</p>
-        <nav>
-            <a href="#collection">View The Collection</a>
-            <a href="#animals">Available Animals</a>
-        </nav>
-    </header>
 
-    <main>
-        <section id="program">
-            <h2>The Program</h2>
-            <h3>Precision Genetics. Purpose-Driven Breeding.</h3>
-            <p>We don't chase volume. Every pairing is chosen for the morphs it can produce, every genetic is confirmed before it's marketed, and every animal leaves with honest, complete documentation.</p>
-        </section>
+<header id="hdr">
+  <div class="wrap">
+    <nav>
+      <a class="nav-brand" href="#top">
+        <img src="logo.png" alt="Morph Forge Exotics" />
+        <span>MORPH FORGE EXOTICS</span>
+      </a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#species">Species</a>
+        <a href="#collection">Collection</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#ethics">Ethics</a>
+        <a href="#contact" class="nav-cta">Get In Touch</a>
+      </div>
+    </nav>
+  </div>
+</header>
 
-        <section id="species">
-            <h2>What We Work With</h2>
-            <h3>Two Species. One Standard.</h3>
-            <p>Focused specialization across two of the hobby's most rewarding morph projects.</p>
-        </section>
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">New Britain, Connecticut</div>
+        <h1>Designer Reptile Genetics,<span class="gold">Forged With Intent.</span></h1>
+        <p class="lead">Morph Forge Exotics is a small-scale, genetics-focused breeding program producing collector-quality ball python and western hognose morphs — bred deliberately, documented transparently, and raised with care.</p>
+        <div class="btn-row">
+          <a href="#collection" class="btn btn-primary">View The Collection</a>
+          <a href="#contact" class="btn btn-ghost">Available Animals</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><div class="num">2</div><div class="lbl">Flagship Species</div></div>
+          <div class="stat"><div class="num">8</div><div class="lbl">Foundation Animals</div></div>
+          <div class="stat"><div class="num">Oct '26</div><div class="lbl">First Pairing</div></div>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <img src="logo.png" alt="Morph Forge Exotics badge logo" />
+      </div>
+    </div>
+  </div>
+</section>
 
-        <section id="collection">
-            <h2>Genetic Assets</h2>
-            <h3>The Foundation Collection</h3>
-            <p>This section will contain the table of animals, genetics, species, and status.</p>
-        </section>
+<!-- ABOUT / PILLARS -->
+<section id="about" class="alt">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">The Program</div>
+      <h2>Precision Genetics.<br/>Purpose-Driven Breeding.</h2>
+      <p>We don't chase volume. Every pairing is chosen for the morphs it can produce, every genetic is confirmed before it's marketed, and every animal leaves with honest, complete documentation.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <div class="ic gold">⬡</div>
+        <h3>Confirmed Genetics</h3>
+        <p>Every "possible" gene is verified through RGI shed testing or proven breeding outcomes before any offspring is listed with that trait. No inflated claims.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="ic gold">⚒</div>
+        <h3>Intentional Pairings</h3>
+        <p>A multi-year roadmap targeting high-value designer combinations — from Spinner Pieds to the long-game Clown Pied project.</p>
+      </div>
+      <div class="pillar reveal">
+        <div class="ic gold">◈</div>
+        <h3>Welfare First</h3>
+        <p>Appropriate breeding weights, no welfare-risk pairings, an emergency vet fund kept on hand, and a live-arrival guarantee on every shipment.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <section id="roadmap">
-            <h2>The Long Game</h2>
-            <h3>A Multi-Year Roadmap</h3>
-            <p>This section will contain the timeline (e.g., SUMMER 2026, OCTOBER 2026).</p>
-        </section>
+<!-- SPECIES -->
+<section id="species">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">What We Work With</div>
+      <h2>Two Species. One Standard.</h2>
+      <p>Focused specialization across two of the hobby's most rewarding morph projects.</p>
+    </div>
+    <div class="species">
+      <div class="species-card reveal">
+        <div class="tag">Flagship</div>
+        <h3>Ball Pythons</h3>
+        <div class="latin">Python regius</div>
+        <p>The core of the program. A foundation collection built around recessive Pied and Clown lines, paired with co-dominant and dominant genes to stack toward designer-grade combinations.</p>
+        <div class="traits"><span>Pied</span><span>Clown</span><span>Spinner</span><span>GHI Mojave</span><span>OD Yellowbelly Fire</span><span>BEL</span></div>
+      </div>
+      <div class="species-card reveal">
+        <div class="tag">Expanding 2027–2028</div>
+        <h3>Western Hognose</h3>
+        <div class="latin">Heterodon nasicus</div>
+        <p>A growing project led by a confirmed Anaconda Toffeebelly male, with a multi-gene female pending het confirmation — targeting standout Anaconda and Axanthic combinations.</p>
+        <div class="traits"><span>Anaconda</span><span>Toffeebelly</span><span>Axanthic</span></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <section id="ethics">
-            <h2>Our Standard</h2>
-            <h3>Animal Welfare & Ethics</h3>
-            <p>This section will contain the list of ethics (e.g., Welfare First, Transparency).</p>
-        </section>
+<!-- COLLECTION -->
+<section id="collection" class="alt">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Genetic Assets</div>
+      <h2>The Foundation Collection</h2>
+      <p>The breeding animals driving the program — each selected for the morphs they unlock.</p>
+    </div>
+    <div class="table-wrap reveal">
+      <table>
+        <thead>
+          <tr><th>Animal</th><th>Genetics</th><th>Species</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="name">Fang</td><td>Pied (visual)</td><td>Ball Python ♂</td><td><span class="pill ready">Breeding Ready</span></td></tr>
+          <tr><td class="name">Jack Jack</td><td>Clown (visual)</td><td>Ball Python ♂</td><td><span class="pill ready">Breeding Ready</span></td></tr>
+          <tr><td class="name">Hazel</td><td>Poss. GHI Mojave</td><td>Ball Python ♀</td><td><span class="pill ready">Oct 2026</span></td></tr>
+          <tr><td class="name">Cleo</td><td>Super OD YB Fire, poss. Pastel</td><td>Ball Python ♀</td><td><span class="pill soon">2027–2028</span></td></tr>
+          <tr><td class="name">Mellow</td><td>Super Pastel Lesser Pinstripe (Spinner)</td><td>Ball Python ♀</td><td><span class="pill soon">2027–2028</span></td></tr>
+          <tr><td class="name">Shadow</td><td>Poss. GHI Mojave</td><td>Ball Python ♀</td><td><span class="pill soon">2027 Season</span></td></tr>
+          <tr><td class="name">Dune</td><td>Anaconda Toffeebelly (visual)</td><td>Hognose ♂</td><td><span class="pill soon">Growing Out</span></td></tr>
+          <tr><td class="name">Isis</td><td>Poss. het Anaconda, Toffeebelly, Axanthic</td><td>Hognose ♀</td><td><span class="pill soon">Growing Out</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="collection-note">All possible genetics are confirmed via RGI testing or proven breeding before offspring are marketed with those traits.</p>
+  </div>
+</section>
 
-        <section id="contact">
-            <h2>Get In Touch</h2>
-            <h3>Looking for a specific morph?</h3>
-            <p>Available animals are listed on MorphMarket as they hatch. For holdbacks, upcoming pairings, or questions about the program — reach out anytime.</p>
-            <a href="mailto:contact@morphforgeexotics.com">Email Us</a>
-            <a href="#collection">See The Collection</a>
-        </section>
-    </main>
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">The Long Game</div>
+      <h2>A Multi-Year Roadmap</h2>
+      <p>Built to grow sustainably — from a single flagship pairing to a full designer morph program.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item reveal"><div class="date">SUMMER 2026</div><div class="ev">RGI genetic testing completed · social channels and MorphMarket store live.</div></div>
+      <div class="tl-item reveal"><div class="date">OCTOBER 2026</div><div class="ev">Season 1 — first breeding attempt: <span class="gold">Fang × Hazel</span>.</div></div>
+      <div class="tl-item reveal"><div class="date">EARLY 2027</div><div class="ev">First clutch hatched, documented, and listed for sale.</div></div>
+      <div class="tl-item reveal"><div class="date">2027–2028</div><div class="ev">Full ball python program operational — 4–5 pairings, including the high-ceiling <span class="gold">Jack Jack × Mellow (Spinner)</span>. Hognose program begins.</div></div>
+      <div class="tl-item reveal"><div class="date">2028–2029</div><div class="ev">Program at full output · LLC formation as revenue justifies formal structure.</div></div>
+      <div class="tl-item reveal"><div class="date">2029–2030</div><div class="ev">First <span class="gold">Clown Pied</span> production possible — one of the most sought-after morphs in the hobby.</div></div>
+    </div>
+  </div>
+</section>
 
-    <footer>
-        <p>MorphMarket | Instagram | TikTok | Facebook</p>
-    </footer>
+<!-- ETHICS -->
+<section id="ethics" class="alt">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">Our Standard</div>
+      <h2>Animal Welfare &amp; Ethics</h2>
+      <p>Transparency and welfare aren't features — they're the foundation of the brand.</p>
+    </div>
+    <div class="ethics-grid">
+      <div class="ethic reveal"><span class="chk">✦</span><p>Animals bred only at appropriate, healthy weights.</p></div>
+      <div class="ethic reveal"><span class="chk">✦</span><p>No welfare-risk pairings, including Super Pinstripe combinations.</p></div>
+      <div class="ethic reveal"><span class="chk">✦</span><p>Every buyer receives accurate, honest genetic information.</p></div>
+      <div class="ethic reveal"><span class="chk">✦</span><p>Unconfirmed traits always disclosed as "possible het."</p></div>
+      <div class="ethic reveal"><span class="chk">✦</span><p>Emergency veterinary fund maintained at all times.</p></div>
+      <div class="ethic reveal"><span class="chk">✦</span><p>ID and age verification required — sales to 18+ buyers only.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA / CONTACT -->
+<section id="contact" class="cta">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <div class="eyebrow" style="text-align:center;">Get In Touch</div>
+      <h2>Looking for a specific morph?</h2>
+      <p>Available animals are listed on MorphMarket as they hatch. For holdbacks, upcoming pairings, or questions about the program — reach out anytime.</p>
+      <div class="btn-row" style="justify-content:center;">
+        <a href="mailto:morphforgeexotics@gmail.com" class="btn btn-primary">Email Us</a>
+        <a href="#collection" class="btn btn-ghost">See The Collection</a>
+      </div>
+      <div class="socials">
+        <a href="#">MorphMarket</a>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>
+      <div class="brandmark">MORPH FORGE EXOTICS</div>
+      <div class="tag">Precision Genetics. Purpose-Driven Breeding.</div>
+    </div>
+    <div class="meta">
+      New Britain, Connecticut<br/>
+      &copy; 2026 Morph Forge Exotics. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // nav scroll state
+  const hdr = document.getElementById('hdr');
+  window.addEventListener('scroll', () => {
+    hdr.classList.toggle('scrolled', window.scrollY > 20);
+  });
+  // mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
 </body>
 </html>

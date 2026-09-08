@@ -1,0 +1,42 @@
+from html.parser import HTMLParser
+from pathlib import Path
+from urllib.parse import urlparse
+import re
+
+root = Path(__file__).parent
+html = (root / 'index.html').read_text(encoding='utf-8')
+
+class Parser(HTMLParser):
+    pass
+
+Parser().feed(html)
+required = [
+    'Morph Forge Exotics — Precision Genetics. Purpose-Driven Breeding.',
+    'New Britain, Connecticut',
+    'Fang', 'Jack Jack', 'Hazel', 'Cleo', 'Mellow', 'Shadow', 'Dune', 'Isis',
+    'Fang × Hazel', 'Jack Jack × Mellow', 'Clown Pied',
+    'morphforgeexotics@gmail.com', 'Animal Welfare &amp; Ethics',
+]
+for text in required:
+    if text not in html and text.replace('&amp;', '&') not in html:
+        raise SystemExit(f'missing required content: {text}')
+if 'This section will contain' in html:
+    raise SystemExit('placeholder content remains')
+refs = re.findall(r'(?:(?:src|href)="|url\(\s*[\'\"]?)([^"\'\')\s]+)', html)
+for ref in refs:
+    parsed = urlparse(ref)
+    if parsed.scheme or ref.startswith('#') or ref.startswith('mailto:'):
+        continue
+    if not (root / ref).is_file():
+        raise SystemExit(f'broken local reference: {ref}')
+ids = set(re.findall(r'\bid="([^"]+)"', html))
+for anchor in re.findall(r'href="#([^"]+)"', html):
+    if anchor and anchor not in ids:
+        raise SystemExit(f'broken internal anchor: #{anchor}')
+if 'contact@morphforgeexotics.com' in html:
+    raise SystemExit('obsolete contact address remains')
+for label in ('MorphMarket', 'Instagram', 'TikTok', 'Facebook'):
+    matches = re.findall(r'<a[^>]*href="([^"]+)"[^>]*>' + label, html)
+    if any(urlparse(href).scheme for href in matches):
+        raise SystemExit(f'fabricated social URL for {label}')
+print('Static validation passed')
